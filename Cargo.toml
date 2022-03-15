@@ -2,9 +2,10 @@
 name = "npm-init-analog"
 version = "1.0.0"
 authors = ["smolovk"]
+description = "NPM init analog script"
+repository = "https://github.com/smolovk/npm-init-analog"
+license = "MIT"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 color-eyre = "0.6.1"
