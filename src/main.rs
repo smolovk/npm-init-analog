@@ -4,6 +4,7 @@ use dialoguer::{
     theme::ColorfulTheme,
     Input
 };
+use console::style;
 use std::fs;
 
 #[derive(Serialize)]
@@ -20,7 +21,7 @@ struct Package {
 fn main() -> Result<()> {
     color_eyre::install()?;
 
-    println!("Scaffold package.json! (smolovk)");
+    println!("{}", style("package.json generator (by smolovk)").bold().green());
 
     let theme = ColorfulTheme::default();
     let cwd = std::env::current_dir().unwrap();
@@ -83,9 +84,14 @@ fn main() -> Result<()> {
 
     let json = serde_json::to_string_pretty(&package)?;
     
-    println!("{}", json);
-    
     fs::write("package.json", json)?;
+
+    println!(
+        "{} {}{}",
+        style("generated package.json for").bold().green(),
+        style(package.name).bold().blue(),
+        style("!").bold().green()
+    );
     
     Ok(())
 }
