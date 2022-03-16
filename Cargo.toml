@@ -1,6 +1,6 @@
 [package]
 name = "npm-init-analog"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["smolovk"]
 description = "NPM init analog script"
 repository = "https://github.com/smolovk/npm-init-analog"
