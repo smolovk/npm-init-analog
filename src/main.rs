@@ -8,9 +8,15 @@ use console::style;
 use std::fs;
 
 #[derive(Serialize)]
+struct StartScript {
+    start: String
+}
+
+#[derive(Serialize)]
 struct Package {
     name: String,
     version: String,
+    scripts: StartScript,
     description: String,
     main: String,
     author: String,
@@ -38,7 +44,7 @@ fn main() -> Result<()> {
         .with_prompt("version")
         .default(String::from("1.0.0"))
         .interact_text()?;
-
+    
     let description: String = Input::with_theme(&theme)
         .with_prompt("description")
         .allow_empty(true)
@@ -49,6 +55,10 @@ fn main() -> Result<()> {
         .default(String::from("index.js"))
         .interact_text()?;
     
+    let start_script: StartScript = StartScript {
+        start: String::from(format!("node {}", &main))
+    };
+
     let author: String = Input::with_theme(&theme)
         .with_prompt("author")
         .allow_empty(true)
@@ -75,6 +85,7 @@ fn main() -> Result<()> {
     let package = Package {
         name: name,
         version: version,
+        scripts: start_script,
         description: description,
         main: main,
         author: author,
