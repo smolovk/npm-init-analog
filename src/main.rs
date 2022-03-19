@@ -32,7 +32,7 @@ fn main() -> Result<()> {
     let theme = ColorfulTheme::default();
     let cwd = std::env::current_dir().unwrap();
     let dir_str = String::from(cwd.to_string_lossy());
-    let dir_arr: Vec<String> = dir_str.split("/").map(str::to_string).collect();
+    let dir_arr: Vec<String> = dir_str.split('/').map(str::to_string).collect();
     let current_dir = String::from(dir_arr.last().unwrap());
 
     let name: String = Input::with_theme(&theme)
@@ -56,7 +56,7 @@ fn main() -> Result<()> {
         .interact_text()?;
     
     let start_script: StartScript = StartScript {
-        start: String::from(format!("node {}", &main))
+        start: format!("node {}", &main)
     };
 
     let author: String = Input::with_theme(&theme)
@@ -73,24 +73,22 @@ fn main() -> Result<()> {
         .with_prompt("keywords")
         .allow_empty(true)
         .interact_text()?;
-
-    let keywords: Vec<String>;
         
-    if keywords_str != String::from("") {
-        keywords = keywords_str.split(", ").map(str::to_string).collect();
+    let keywords: Vec<String> = if keywords_str != *"" {
+        keywords_str.split(", ").map(str::to_string).collect()
     } else {
-        keywords = Vec::new();
-    }
+        Vec::new()
+    };
 
     let package = Package {
-        name: name,
-        version: version,
+        name,
+        version,
         scripts: start_script,
-        description: description,
-        main: main,
-        author: author,
-        license: license,
-        keywords: keywords
+        description,
+        main,
+        author,
+        license,
+        keywords
     };
 
     let json = serde_json::to_string_pretty(&package)?;
